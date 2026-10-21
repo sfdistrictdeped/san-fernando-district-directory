@@ -65,9 +65,6 @@ body{background:#eef3ff}
 .theme-dark .card{background:#222438;border-color:#41435c}.theme-dark .description,.theme-dark .footer{color:#b8b8cf}.theme-dark .theme-toggle{background:#34364e;color:#f3f4ff;border-color:#555875}.theme-dark .changelog{background:#26324c;color:#bfdbfe}.theme-dark .about{background:#1e3a34;color:#a7f3d0}.theme-dark .release-entry{border-color:#41435c}.theme-dark .changelog-note{color:#b8b8cf}
 @media(max-width:600px){.home-card>.theme-toggle{top:10px;right:10px;padding:8px 10px;font-size:.76rem}.workspace-theme-toggle{padding:8px 9px;font-size:.75rem}.workspace-head .workspace-title{min-width:100px}}
 
-
-.update-banner{position:fixed;z-index:20;left:12px;right:12px;bottom:12px;margin:auto;width:min(100% - 24px,560px);display:none;align-items:center;gap:12px;padding:14px 16px;background:#252447;color:#fff;border:1px solid #7773b7;border-radius:16px;box-shadow:0 12px 36px #0005;text-align:left}.update-banner.show{display:flex}.update-banner-text{flex:1;font-size:.9rem;line-height:1.4}.update-banner-text strong{display:block;margin-bottom:2px}.update-banner button{border:0;border-radius:10px;padding:10px 12px;font-weight:800;background:#a5f3fc;color:#164e63;white-space:nowrap}.update-dismiss{background:transparent!important;color:#fff!important;padding:4px 7px!important;font-size:1.1rem}
-
 </style>
 </head>
 <body>
@@ -221,7 +218,7 @@ body{background:#eef3ff}
 <p>Fermar R. Danao — Administrative Officer II</p>
 <p><strong>Coding:</strong> ChatGPT</p>
 <p><strong>Developed by:</strong> San Fernando District ICT and ISM Team</p>
-<p><strong>Version:</strong> 1.2</p><p><strong>2026 San Fernando District ICT and ISM Innovation.</strong></p>
+<p><strong>Version:</strong> 1.0.0 (stable release)</p><p><strong>2026 San Fernando District ICT and ISM Innovation.</strong></p>
 <p><strong>Public web app:</strong> Hosted on GitHub Pages; poster processing is performed locally in your browser.</p></section></div>
 
 <div class="modal-backdrop" id="assemblyModal" role="dialog" aria-modal="true" aria-labelledby="assemblyTitle"><section class="modal"><button class="modal-close" data-close aria-label="Close assembly guide">×</button><h2 id="assemblyTitle">Poster assembly guide</h2><p>Arrange the sheets left to right, then move top to bottom. Each sheet is numbered in reading order.</p><div id="assemblyMap" class="assembly-map"></div><p>Use the crop marks as cutting guides. Match the artwork at each shared edge; use the configured overlap to align sheets before taping.</p><button type="button" class="browse-btn" id="downloadGuideBtn">Download assembly guide</button></section></div>
@@ -456,43 +453,6 @@ document.addEventListener('keydown',e=>{const typing=['INPUT','SELECT','TEXTAREA
 const oldLoadFile=loadFile;loadFile=function(file){if(!file){showStatus('No image selected. Choose an image to continue.',true);return}if(file.size>40*1024*1024){showStatus('This image is over 40 MB. Choose a smaller image to avoid browser memory problems.',true);return}oldLoadFile(file)};
 lastSnapshot=snapshot();updateUndoRedo();updateSmartSummary();
 
-// AutoTarp v1.2 update flow: prompt before activating a newly installed worker.
-if ('serviceWorker' in navigator && location.protocol.startsWith('http')) {
-  let waitingWorker = null;
-  let reloadingForUpdate = false;
-  const banner = document.getElementById('updateBanner');
-  const applyButton = document.getElementById('applyUpdate');
-  const dismissButton = document.getElementById('dismissUpdate');
-  function showUpdate(worker) { waitingWorker = worker; if (banner) banner.classList.add('show'); }
-  window.addEventListener('load', async () => {
-    try {
-      const registration = await navigator.serviceWorker.register('./service-worker.js');
-      if (registration.waiting && navigator.serviceWorker.controller) showUpdate(registration.waiting);
-      registration.addEventListener('updatefound', () => {
-        const installing = registration.installing;
-        if (!installing) return;
-        installing.addEventListener('statechange', () => {
-          if (installing.state === 'installed' && navigator.serviceWorker.controller) showUpdate(installing);
-        });
-      });
-      // Check when the app opens; browser service-worker checks remain subject to browser scheduling.
-      registration.update().catch(() => {});
-      document.addEventListener('visibilitychange', () => {
-        if (document.visibilityState === 'visible') registration.update().catch(() => {});
-      });
-      window.addEventListener('online', () => registration.update().catch(() => {}));
-    } catch (error) { console.warn('AutoTarp offline/update support could not initialize.', error); }
-  });
-  if (applyButton) applyButton.addEventListener('click', () => {
-    if (waitingWorker) waitingWorker.postMessage({ type: 'SKIP_WAITING' });
-  });
-  if (dismissButton) dismissButton.addEventListener('click', () => { if (banner) banner.classList.remove('show'); });
-  navigator.serviceWorker.addEventListener('controllerchange', () => {
-    if (reloadingForUpdate) return;
-    reloadingForUpdate = true;
-    window.location.reload();
-  });
-}
+if('serviceWorker'in navigator&&location.protocol.startsWith('http'))window.addEventListener('load',()=>navigator.serviceWorker.register('./service-worker.js').catch(()=>{}));
 </script>
-<div class="update-banner" id="updateBanner" role="status" aria-live="polite"><div class="update-banner-text"><strong>AutoTarp v1.2 is ready</strong>A new version has been downloaded. Reload to update when convenient.</div><button id="applyUpdate" type="button">Reload to update</button><button class="update-dismiss" id="dismissUpdate" type="button" aria-label="Remind me later">×</button></div>
 </body></html>
