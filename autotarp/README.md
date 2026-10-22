@@ -62,3 +62,9 @@ Presets and theme preference are stored locally in the current browser. Do not c
 ## Automatic updates (v1.2)
 
 When hosted over HTTPS, AutoTarp checks for a service-worker update on app load, when the app becomes visible, and when the device reconnects. If a new version is installed while an older one is active, a notification offers **Reload to update**. Users can dismiss it and continue using the current session. Browser scheduling and network availability can affect when an update is detected.
+
+
+## PWA identity and scope
+- AutoTarp uses a unique manifest ID: `/san-fernando-district-directory/autotarp/`.
+- Its start URL and scope are explicitly restricted to `/san-fernando-district-directory/autotarp/`, so it can install independently from the parent SFD OneDirectory PWA.
+- Its service-worker cache uses the `autotarp-` prefix and a dedicated cache name.

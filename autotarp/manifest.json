@@ -1,10 +1,10 @@
 {
-  "id": "./",
+  "id": "/san-fernando-district-directory/autotarp/",
   "name": "AutoTarp — Automated Tarpapel Maker",
   "short_name": "AutoTarp",
   "description": "AutoTarp v1.2 — Printing Art Simplified",
-  "start_url": "./",
-  "scope": "./",
+  "start_url": "/san-fernando-district-directory/autotarp/index.html",
+  "scope": "/san-fernando-district-directory/autotarp/",
   "display": "standalone",
   "orientation": "any",
   "background_color": "#fff5d6",
