@@ -1,10 +1,10 @@
 {
-  "id": "./",
+  "id": "/san-fernando-district-directory/",
   "name": "SFD OneDirectory • District Pages Directory",
   "short_name": "SFD OneDirectory",
   "description": "Central access to San Fernando District and DepEd portals, tools, and applications.",
-  "start_url": "./",
-  "scope": "./",
+  "start_url": "/san-fernando-district-directory/",
+  "scope": "/san-fernando-district-directory/",
   "display": "standalone",
   "orientation": "any",
   "background_color": "#ffffff",
@@ -18,13 +18,13 @@
       "src": "icons/icon-192.png",
       "sizes": "192x192",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "any"
     },
     {
       "src": "icons/icon-512.png",
       "sizes": "512x512",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "any"
     }
   ]
 }
